@@ -1,10 +1,12 @@
 {
-  "name": "local",
+  "name": "base",
   "default_attributes": {
   },
   "json_class": "Chef::Environment",
   "description": "",
-   "cookbook_versions": {
+  "cookbook_versions": {
   },
   "chef_type": "environment"
-  }
+}
+
+// Environment cookbook version constraints not allowed in chef-solo
