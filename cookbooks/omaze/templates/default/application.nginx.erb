@@ -1,0 +1,12 @@
+# File created by Chef
+
+server {
+	listen <%= node['omaze']['web_application']['port'] %>;
+
+	server_name <%= node['omaze']['web_application']['domain_name'] %>;
+
+	location / {
+		root /var/www/<%= node['omaze']['web_application']['name'] %>;
+    	index index.html index.htm index.php;
+    }
+}

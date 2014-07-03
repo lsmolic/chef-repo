@@ -1,0 +1,11 @@
+default['omaze']['web_application']['name'] = 'omaze_local'
+default['omaze']['web_application']['username'] = 'vg'
+default['omaze']['web_application']['domain_name'] = "localhost" 
+default['omaze']['web_application']['port'] = "8080"
+default['omaze']['database']['name'] = 'omaze_local'
+default['omaze']['database']['username'] = 'root'
+default['omaze']['database']['password'] = ''
+default['nginx']['dir'] = '/etc/nginx'
+default['nginx']['log_dir'] = '/var/log/nginx'
+default['nginx']['init_style'] = 'runit'
+default['nginx']['default_site_enabled'] = true
