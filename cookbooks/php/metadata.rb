@@ -11,6 +11,7 @@ depends 'mysql'
 depends 'yum-epel'
 depends 'windows'
 depends 'iis'
+depends 'php-xml'
 
 %w{ debian ubuntu centos redhat fedora scientific amazon windows oracle }.each do |os|
   supports os

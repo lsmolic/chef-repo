@@ -3,14 +3,19 @@ name "development"
 
 # Run list function we mentioned earlier
 run_list(
-#	"recipe[php]",
-#	"recipe[nginx]",
+	"recipe[php-xml]",
+	"recipe[php]",
+	"recipe[php-fpm]",
+	"recipe[phpunit]",	
+	"recipe[nginx]",
 	"recipe[python]",
-	"recipe[thrift]",
-#	"recipe[omaze]"
+	"recipe[flask]",
+	"recipe[thrift-omaze]",
+	"recipe[mysql]",
+	"recipe[omaze]"
 )
 
-override_attributes("node" => { 
+override_attributes({
 	"omaze" => {
 		"web_application" => {
 			"name" => 'omaze_local',
@@ -27,14 +32,18 @@ override_attributes("node" => {
 	"php" => {
 		"configure_options" => ["--with-openssl", "--with-zlib", "--with-curl", "--enable-exif", "--enable-mbstring", "--with-mcrypt", "--enable-ftp", "--with-mysqli", "--with-pdo-mysql", "--with-pear", "--with-config-file-path=/etc", "--enable-fpm", "--enable-opcache", "--with-xsl", "--with-dom"]
 	},
+	"php-fpm" => {},
+	"phpunit" => {},
 	"nginx" => {
 		"dir" => '/etc/nginx',
 		"log_dir" => '/var/log/nginx',
 		"init_style" => 'runit',
 		"default_site_enabled" => true
 	},
-	"thrift" => {
-		"source" => "http://www.eng.lsu.edu/mirrors/apache/thrift/0.9.1/thrift-0.9.1.tar.gz",
-		"configure_options" => []
+	"python" => {},
+	"thrift-omaze" => {
+		"git_repository" => "https://github.com/apache/thrift",
+		"git_revision" => "9c929c8979fab8d883b83df87034ed81373effb5",
+		"configure_options" => ["--without-ruby"]
 	}
 })

@@ -1,1 +1,1 @@
-#depends 'rbenv'
+depends 'nginx'

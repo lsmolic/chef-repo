@@ -60,15 +60,6 @@ cookbook_file "/var/www/#{application_name}/index.html" do
   mode '755'
 end
 
-#directory '/u' do
-#  action :create
-#  mode '755'
-#end
-
-#link '/u/apps' do
-#  to '/var/www'
-#end
-
 # Nginx
 
 template "#{nginx_dir}/sites-available/#{application_name}" do

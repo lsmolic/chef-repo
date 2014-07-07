@@ -1,6 +1,7 @@
 #
-# Cookbook Name:: thrift
-# Attributes:: default
+# Author::  Seth Chisamore (<schisamo@opscode.com>)
+# Cookbook Name:: php-fpm
+# Recipe:: package
 #
 # Copyright 2011, Opscode, Inc.
 #
@@ -17,8 +18,20 @@
 # limitations under the License.
 #
 
-default['thrift']['version']  = '0.9.1'
-#default['thrift']['mirror']   = 'http://apache.mirrors.tds.net'
-default['thrift']['source']   = "http://www.eng.lsu.edu/mirrors/apache/thrift/0.9.1/thrift-0.9.1.tar.gz"
-default['thrift']['checksum'] = '71d129c49a2616069d9e7a93268cdba59518f77b3c41e763e09537cb3f3f0aac'
-default['thrift']['configure_options'] = []
+template node['php-fpm']['conf_file'] do
+  source "php-fpm.conf.erb"
+  mode 00644
+  owner "root"
+  group "root"
+  notifies :restart, "service[php-fpm]"
+end
+
+if node['php-fpm']['pools']
+  node['php-fpm']['pools'].each do |pool|
+    php_fpm_pool pool[:name] do
+      pool.each do |k, v|
+        self.params[k.to_sym] = v
+      end
+    end
+  end
+end
