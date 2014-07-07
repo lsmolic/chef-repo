@@ -9,9 +9,12 @@ run_list(
 	"recipe[phpunit]",	
 	"recipe[nginx]",
 	"recipe[python]",
-	"recipe[flask]",
+	"recipe[flask-omaze]",
 	"recipe[thrift-omaze]",
-	"recipe[mysql]",
+	"recipe[mysql::server]",
+	"recipe[mysql::client]",
+	"recipe[nodejs]",
+	"recipe[golang]",
 	"recipe[omaze]"
 )
 

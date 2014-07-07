@@ -31,11 +31,9 @@ end
     mode '755'
   end
 
-  bash "install_autoconf" do
-    cwd Chef::Config[:file_cache_path]
-    code <<-EOH
-      (yum -y install autoconf-2.69-12.2.noarch.rpm)
-    EOH
+  package "autoconf" do
+    action :install
+    source "#{Chef::Config[:file_cache_path]}/autoconf-2.69-12.2.noarch.rpm"
   end
   
 # install thrift from git revision
