@@ -1,6 +1,7 @@
 #
-# Cookbook Name:: thrift
-# Attributes:: default
+# Author:: Seth Chisamore <schisamo@opscode.com>
+# Cookbook Name:: python
+# Recipe:: virtualenv
 #
 # Copyright 2011, Opscode, Inc.
 #
@@ -17,8 +18,9 @@
 # limitations under the License.
 #
 
-default['thrift']['version']  = '0.9.1'
-#default['thrift']['mirror']   = 'http://apache.mirrors.tds.net'
-default['thrift']['source']   = "http://www.eng.lsu.edu/mirrors/apache/thrift/0.9.1/thrift-0.9.1.tar.gz"
-default['thrift']['checksum'] = '71d129c49a2616069d9e7a93268cdba59518f77b3c41e763e09537cb3f3f0aac'
-default['thrift']['configure_options'] = []
+include_recipe "python::pip"
+
+python_pip "virtualenv" do
+  action :upgrade
+  version node['python']['virtualenv_version']
+end

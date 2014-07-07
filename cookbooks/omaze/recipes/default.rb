@@ -2,8 +2,6 @@ require 'yaml/store'
 
 include_recipe 'omaze::nginx'
 
-puts node['nginx'].inspect
-
 application_name = node['omaze']['web_application']['name']
 user_name = node['omaze']['web_application']['username']
 nginx_dir = node['nginx']['dir']
@@ -79,7 +77,11 @@ template "#{nginx_dir}/sites-available/#{application_name}" do
   notifies :reload, 'service[nginx]'
 end
 
-nginx_site application_name
+begin
+  nginx_site application_name
+rescue
+  puts "nginx_site method doesn't exist... aborting"
+end
 
 # Open up ports for NAT
 

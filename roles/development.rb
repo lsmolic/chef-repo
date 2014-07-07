@@ -3,9 +3,11 @@ name "development"
 
 # Run list function we mentioned earlier
 run_list(
-	"recipe[php]",
-	"recipe[nginx]",
-	"recipe[omaze]"
+#	"recipe[php]",
+#	"recipe[nginx]",
+	"recipe[python]",
+	"recipe[thrift]",
+#	"recipe[omaze]"
 )
 
 override_attributes("node" => { 
@@ -30,5 +32,9 @@ override_attributes("node" => {
 		"log_dir" => '/var/log/nginx',
 		"init_style" => 'runit',
 		"default_site_enabled" => true
+	},
+	"thrift" => {
+		"source" => "http://www.eng.lsu.edu/mirrors/apache/thrift/0.9.1/thrift-0.9.1.tar.gz",
+		"configure_options" => []
 	}
 })

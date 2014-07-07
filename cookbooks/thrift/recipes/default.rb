@@ -35,8 +35,9 @@ else
 end
 
 remote_file "#{Chef::Config[:file_cache_path]}/thrift-#{version}.tar.gz" do
-  source "#{node['thrift']['mirror']}/thrift/#{version}/thrift-#{version}.tar.gz"
-  checksum node['thrift']['checksum']
+  source node['thrift']['source']
+  #source "#{node['thrift']['mirror']}/thrift/#{version}/thrift-#{version}.tar.gz"
+  #checksum node['thrift']['checksum']
 end
 
 bash "install_thrift" do
