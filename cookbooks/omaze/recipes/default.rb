@@ -38,12 +38,12 @@ directory "/var/www" do
   mode '755'
 end
 
-directory "/var/www/#{application_name}" do
-  action :create
-  owner user_name
-  group user_name
-  mode '755'
-end
+#directory "/var/www/#{application_name}" do
+#  action :create
+#  owner user_name
+#  group user_name
+#  mode '755'
+#end
 
 #set all file in directory owned by 
 directory "/var/www" do
@@ -53,12 +53,12 @@ directory "/var/www" do
   recursive true
 end
 
-cookbook_file "/var/www/#{application_name}/index.html" do
-  action :create
-  owner user_name
-  group user_name
-  mode '755'
-end
+#cookbook_file "/var/www/#{application_name}/index.html" do
+#  action :create
+#  owner user_name
+#  group user_name
+#  mode '755'
+#end
 
 # Nginx
 
@@ -72,6 +72,11 @@ begin
   nginx_site application_name
 rescue
   puts "nginx_site method doesn't exist... aborting"
+end
+
+link "/var/www/#{application_name}" do
+  to "/shared/#{application_name}"
+  link_type :symbolic
 end
 
 # Open up ports for NAT

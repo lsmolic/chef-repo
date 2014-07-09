@@ -35,7 +35,15 @@ override_attributes({
 	"php" => {
 		"configure_options" => ["--with-openssl", "--with-zlib", "--with-curl", "--enable-exif", "--enable-mbstring", "--with-mcrypt", "--enable-ftp", "--with-mysqli", "--with-pdo-mysql", "--with-pear", "--with-config-file-path=/etc", "--enable-fpm", "--enable-opcache", "--with-xsl", "--with-dom"]
 	},
-	"php-fpm" => {},
+	"php-fpm" => {
+		"user" => "nginx",
+		"group" => "nginx",
+		"listen_owner" => "nginx",
+		"listen_group" => "nginx",
+		"pools" => [
+			{ "name" => "wordpress" }
+		]
+	},
 	"phpunit" => {},
 	"nginx" => {
 		"dir" => '/etc/nginx',

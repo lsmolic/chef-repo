@@ -5,11 +5,16 @@ server {
 
 	server_name <%= node['omaze']['web_application']['domain_name'] %>;
 
+	root /var/www/<%= node['omaze']['web_application']['name'] %>;
 	location / {
-		root /var/www/<%= node['omaze']['web_application']['name'] %>;
-    	index index.html index.htm index.php;
+    	index index.php index.html index.htm;
 
-		fastcgi_pass   unix:/var/run/php-fpm/fpm.sock;
+    }
+
+	location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+		fastcgi_pass   unix:/var/run/php-fpm/<%= node['omaze']['web_application']['name'] %>.sock;
 		fastcgi_index  index.php;
 		fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
 		include        fastcgi_params;
