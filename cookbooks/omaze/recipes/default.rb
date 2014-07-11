@@ -1,6 +1,7 @@
 require 'yaml/store'
 
 include_recipe 'omaze::nginx'
+include_recipe "database::mysql"
 
 application_name = node['omaze']['web_application']['name']
 user_name = node['omaze']['web_application']['username']
@@ -38,6 +39,7 @@ directory "/var/www" do
   mode '755'
 end
 
+
 #directory "/var/www/#{application_name}" do
 #  action :create
 #  owner user_name
@@ -60,7 +62,9 @@ end
 #  mode '755'
 #end
 
-# Nginx
+
+
+# Nginx -- split this out into it's own recipe
 
 template "#{nginx_dir}/sites-available/#{application_name}" do
   source "application.nginx.erb"
@@ -78,6 +82,56 @@ link "/var/www/#{application_name}" do
   to "/shared/#{application_name}"
   link_type :symbolic
 end
+
+
+## MYSQL --- split this out into it's own recipe
+
+database_name = node['omaze']['database']['name']
+mysql_root_pass = node['mysql']['server_root_password']
+seed_file = "/shared/#{node['omaze']['database']['seed_file']}"
+
+# create a mysql database
+mysql_database 'omaze_local' do
+  connection ({:host => "localhost", :username => 'root', :password => mysql_root_pass})
+  action :create
+end
+
+mysql_database 'omaze_local' do
+  connection ({:host => "localhost", :username => 'root', :password => mysql_root_pass})
+  action :create
+end
+
+bash 'import omaze database' do
+  code <<-EOH
+    mysql -u root --password=\"#{mysql_root_pass}\" #{database_name} < #{seed_file}
+  EOH
+  only_if do
+    File.exists?(seed_file)
+  end
+  not_if "mysql -uroot --password=\"#{mysql_root_pass}\" #{database_name} -e \"SHOW TABLES LIKE 'wp_options'\" | grep wp_options";
+end
+
+### PHP -- separate out into it's own recipe
+
+directory "/var/lib/php/session" do
+  action :create
+  owner "nobody"
+  group "nogroup"
+  mode '755'
+end
+
+bash 'install pecl extention' do
+  code <<-EOH
+    printf "\n" | pecl install apc
+    echo "extension=apc.so" > /etc/php.d/apc.ini
+  EOH
+  notifies :reload, 'service[nginx]'
+end
+
+
+
+
+
 
 # Open up ports for NAT
 

@@ -56,6 +56,7 @@ if platform?('windows')
 
 else
   node['php']['packages'].each do |pkg|
+    puts node['php']['packages'].inspect
     package pkg do
       action :install
     end

@@ -34,6 +34,10 @@ when 'rhel', 'fedora'
   default['php']['fpm_user']      = 'nobody'
   default['php']['fpm_group']     = 'nobody'
   default['php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
+  default['php']['source_packages']    = ["libvpx-devel", "bzip2-devel", "libc-client-devel", "curl-devel", 
+                                        "freetype-devel", "gmp-devel", "libjpeg-devel", "krb5-devel", "libmcrypt-devel",
+                                        "libpng-devel", "openssl-devel", "t1lib-devel", "mhash-devel", "php-xml",
+                                        "net-snmp-devel", "readline-devel", "libXpm-devel", "enchant-devel", "libcurl-devel"]
   if node['platform_version'].to_f < 6
     default['php']['packages'] = %w{ php53 php53-devel php53-cli php-pear }
   else
@@ -45,6 +49,9 @@ when 'debian'
   default['php']['fpm_user']      = 'www-data'
   default['php']['fpm_group']     = 'www-data'
   default['php']['packages']      = %w{ php5-cgi php5 php5-dev php5-cli php-pear }
+  default['php']['source_packages']    = ["libbz2-dev","libc-client2007e-dev","libcurl4-gnutls-dev",
+                                        "libfreetype6-dev","libgmp3-dev","libjpeg62-dev","libkrb5-dev",
+                                        "libmcrypt-dev","libpng12-dev","libssl-dev","libt1-dev","php-xml"]
 when 'suse'
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
@@ -52,6 +59,9 @@ when 'suse'
   default['php']['fpm_group']     = 'www'
   default['php']['packages']      = %w{ apache2-mod_php5 php5-pear }
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
+  default['php']['source_packages']    = ["libbz2-dev","libc-client2007e-dev","libcurl4-gnutls-dev",
+                                        "libfreetype6-dev","libgmp3-dev","libjpeg62-dev","libkrb5-dev",
+                                        "libmcrypt-dev","libpng12-dev","libssl-dev","libt1-dev","php-xml"]
 when 'windows'
   default['php']['windows']['msi_name']      = 'PHP 5.3.28'
   default['php']['windows']['msi_source']    = 'http://windows.php.net/downloads/releases/php-5.3.28-nts-Win32-VC9-x86.msi'
@@ -70,12 +80,18 @@ when 'windows'
                                       }
   default['php']['pear']          = 'pear.bat'
   default['php']['pecl']          = 'pecl.bat'
+  default['php']['source_packages'] = ["libbz2-dev","libc-client2007e-dev","libcurl4-gnutls-dev","libfreetype6-dev",
+                                      "libgmp3-dev","libjpeg62-dev","libkrb5-dev","libmcrypt-dev","libpng12-dev",
+                                      "libssl-dev","libt1-dev","php-xml"]
 else
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   default['php']['fpm_user']      = 'www-data'
   default['php']['fpm_group']     = 'www-data'
   default['php']['packages']      = %w{ php5-cgi php5 php5-dev php5-cli php-pear }
+  default['php']['source_packages'] = ["libbz2-dev","libc-client2007e-dev","libcurl4-gnutls-dev","libfreetype6-dev",
+                                      "libgmp3-dev","libjpeg62-dev","libkrb5-dev","libmcrypt-dev","libpng12-dev",
+                                      "libssl-dev","libt1-dev","php-xml"]
 end
 
 default['php']['url'] = 'http://us1.php.net/get'
